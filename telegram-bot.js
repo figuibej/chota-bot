@@ -22,18 +22,9 @@ bot.onText(/^\/chota$/, function (msg) {
 });
 
 bot.onText(/^\/chota (.*)/, function (msg, match) {
-    let title = match[1];
-    let found = false;
-    let titleWords = title.split(" ");
-    do {
-        let wordIndex = utils.random(0, titleWords.length - 1);
-        if(!utils.isStopWord(titleWords[wordIndex].toLowerCase())) {
-            found = true;
-            titleWords[wordIndex] = utils.replace(titleWords[wordIndex], utils.findChotoGender(titleWords, wordIndex - 1));
-            console.log(`Resonding /chota ${match[1]} to ${msg.chat.id} with : ${titleWords.join(" ")}`);
-            bot.sendMessage(msg.chat.id, titleWords.join(" "));
-        }
-    } while(!found);
+    let titleResult = utils.changeRandom(match[1])
+    console.log(`Responding /chota ${match[1]} to ${msg.chat.id} with : ${titleResult}`);
+    bot.sendMessage(msg.chat.id, titleResult);
 });
 
 bot.onText(/\/ask (.+)/, function (msg) {

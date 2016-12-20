@@ -2,6 +2,7 @@
 
 let restify = require('restify');
 let movieFetcher = require("./movie-fetcher");
+let utils = require("./utils")
 require('./telegram-bot');
 
 let server = restify.createServer({
@@ -19,6 +20,11 @@ server.get("/", (req, res, next) => {
 
 server.get("/movie", (req, res, next) => {
     movieFetcher.getTitle((err)=> {res.send(500, err)}, (titleResult) => { res.send(200, {title : titleResult }) });
+});
+
+server.get("/movie/:title", (req, res, next) => {
+    let titleResult = utils.changeRandom(req.params.title)
+    titleResult ? res.send(200, { title : titleResult }) : res.send(500, "Something is wrong, title cannot be chotaized")
 });
 
 server.listen(process.env.PORT || 8080, function() {

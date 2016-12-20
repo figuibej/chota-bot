@@ -19,7 +19,7 @@ var getTitle = (err, success) => {
             let i = 0;
             while(i <= titleWords.length | !replaceDone) {
                 let index = utils.random(0, titleWords.length - 1);
-                if(!utils.isStopWord(titleWords[index].toLowerCase())) {
+                if(!utils.isStopWord(titleWords[index].toLowerCase()) && utils.validWordRegExp.test(titleWords[index].toLowerCase())) {
                     replaceDone = true;
                     titleWords[index] = utils.replace(titleWords[index], utils.findChotoGender(titleWords, index - 1));
                     break;
@@ -28,7 +28,7 @@ var getTitle = (err, success) => {
             }
             if(!replaceDone || titleWords.length == 1) { titleWords[0] = "Chota" }
             if(/^(el|la|lo|los|las|se|le|les|un|de)\s(chota|choto|chotos|chotas)$/.test(titleWords.join(" ").toLowerCase())) {
-                getTitle(err,success)
+                getTitle(err, success)
             } else {
                 success(titleWords.join(" ") + ` - (${title})`);
             }
