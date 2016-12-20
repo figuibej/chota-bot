@@ -22,6 +22,9 @@ var getTitle = (err, success) => {
                 if(!utils.isStopWord(titleWords[index].toLowerCase()) && utils.validWordRegExp.test(titleWords[index].toLowerCase())) {
                     replaceDone = true;
                     titleWords[index] = utils.replace(titleWords[index], utils.findChotoGender(titleWords, index - 1));
+                    if (index == 0) {
+                        titleWords[index] = titleWords[index].charAt(0).toUpperCase() + titleWords[index].slice(1);
+                    }
                     break;
                 }
                 i++;
@@ -42,5 +45,3 @@ var getTitle = (err, success) => {
 module.exports = {
     getTitle : getTitle
 };
-
-
