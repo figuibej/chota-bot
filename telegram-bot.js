@@ -9,15 +9,35 @@ let errorHanler = (err) => { bot.sendMessage(msg.chat.id, "Me siento mal, te con
 
 bot.onText(/^\/movie$/, function (msg) {
 	movieFetcher.getTitle(errorHanler, (titleResult) => {
-		console.log(`Responding /movie to ${msg.chat.id} with : ${titleResult}`); 
-		bot.sendMessage(msg.chat.id, titleResult);
+		console.log(`Responding /movie to ${msg.chat.id} with : ${titleResult}`);
+		var opts = {
+			reply_to_message_id: msg.message_id,
+			reply_markup: JSON.stringify({
+			keyboard: [
+				['Esta bien!!!!'],
+				['Maso'],
+				['Buuuuuuuuu']
+			]
+			})
+		};
+		bot.sendMessage(msg.chat.id, titleResult, opts);
 	});
 });
 
 bot.onText(/^\/chota$/, function (msg) {
 	movieFetcher.getTitle(errorHanler, (titleResult) => {
 		console.log(`Responding /chota to ${msg.chat.id} with : ${titleResult}`);
-		bot.sendMessage(msg.chat.id, titleResult);
+		var opts = {
+			reply_to_message_id: msg.message_id,
+			reply_markup: JSON.stringify({
+			keyboard: [
+				['Esta bien!!!!'],
+				['Maso'],
+				['Buuuuuuuuu']
+			]
+			})
+		};
+		bot.sendMessage(msg.chat.id, titleResult, opts);
 	})
 });
 
@@ -40,15 +60,6 @@ bot.onText(/\/quien (.+)/, function (msg) {
 bot.onText(/\/echo (.+)/, function (msg, match) {
 	console.log(`Echo ${match[1]} to ${msg.chat.id}`);
 	bot.sendMessage(msg.chat.id, match[1]);
-});
-
-bot.on('message', function (msg) {
-	if(/chota/.test(msg.text)) {
-		movieFetcher.getTitle(errorHanler, (titleResult) => {
-			console.log(`Responding onMessage to ${msg.chat.id} with : ${titleResult}`);
-			bot.sendMessage(msg.chat.id, titleResult);
-		});
-	}
 });
 
 console.log("Bot in running...");
