@@ -20,7 +20,7 @@ bot.onText(/^\/movie$/, function (msg) {
 			]
 			})
 		};
-		bot.sendMessage(msg.chat.id, titleResult, opts);
+		bot.sendMessage(msg.chat.id, titleResult);
 	});
 });
 
@@ -37,7 +37,7 @@ bot.onText(/^\/chota$/, function (msg) {
 			]
 			})
 		};
-		bot.sendMessage(msg.chat.id, titleResult, opts);
+		bot.sendMessage(msg.chat.id, titleResult);
 	})
 });
 
