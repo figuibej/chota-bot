@@ -3,7 +3,6 @@
 let TelegramBot = require('node-telegram-bot-api');
 let movieFetcher = require("./movie-fetcher");
 let utils = require('./utils');
-let rateOptions = [ ['Esta bien!!!!'], ['Maso'], ['Buuuuuuuuu'] ];
 
 let bot = new TelegramBot('311477110:AAEPYL1lz75Gh52NgJfVbhwYbNnR56rqtIM', { polling: true });
 let errorHanler = (err) => { bot.sendMessage(msg.chat.id, "Me siento mal, te contesto cuando me recupere");}
@@ -44,13 +43,13 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 });
 
 bot.on('message', (msg) => {
-	if(/chota/.test(msg.text))  {
+	console.log(/chota/.test(msg.text.toLowerCase()));
+	if(/chota/.test(msg.text.toLowerCase())) {
 		movieFetcher.getTitle(errorHanler, (titleResult) => {
 			console.log(`Responding on 'message' to ${msg.chat.id} with : ${titleResult}`);
 			bot.sendMessage(msg.chat.id, titleResult);
 		})
 	}
-		
-})
+});
 
 console.log("Bot in running...");
