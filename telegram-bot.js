@@ -44,11 +44,13 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 });
 
 bot.on('message', (msg) => {
-	if(/chota/.test(msg.text)) 
+	if(/chota/.test(msg.text))  {
 		movieFetcher.getTitle(errorHanler, (titleResult) => {
 			console.log(`Responding on 'message' to ${msg.chat.id} with : ${titleResult}`);
-			bot.sendMessage(msg.chat.id, titleResult,opts);
+			bot.sendMessage(msg.chat.id, titleResult);
 		})
+	}
+		
 })
 
 console.log("Bot in running...");
