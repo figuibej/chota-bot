@@ -28,8 +28,8 @@ bot.onText(/^\/chota (.*)/, function (msg, match) {
 });
 
 bot.onText(/\/ask (.+)/, function (msg) {
-	console.log(`Responding 'Tu hermana!!! 'to ${msg.chat.id}`);
-	bot.sendMessage(msg.chat.id, "Tu hermana!!!");
+	console.log(`Responding 'A tu hermana!!! 'to ${msg.chat.id}`);
+	bot.sendMessage(msg.chat.id, "A tu hermana!!!");
 });
 
 bot.onText(/\/quien (.+)/, function (msg) {
