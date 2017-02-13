@@ -33,8 +33,8 @@ bot.onText(/\/ask (.+)/, function (msg) {
 });
 
 bot.onText(/\/quien (.+)/, function (msg) {
-	console.log(`Responding 'Tu hermana!!! 'to ${msg.chat.id}`);
-	bot.sendMessage(msg.chat.id, "Tu hermana!!!");
+	console.log(`Responding 'A tu hermana!!! 'to ${msg.chat.id}`);
+	bot.sendMessage(msg.chat.id, "A tu hermana!!!");
 });
 
 bot.onText(/\/echo (.+)/, function (msg, match) {
