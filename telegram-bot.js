@@ -4,6 +4,8 @@ let TelegramBot = require('node-telegram-bot-api');
 let movieFetcher = require("./movie-fetcher");
 let utils = require('./utils');
 
+console.log(`Getting telegram key from Heroku config : ${process.env.TELEGRAM_KEY}`);
+
 let bot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
 let errorHanler = (err) => { bot.sendMessage(msg.chat.id, "Me siento mal, te contesto cuando me recupere");}
 
