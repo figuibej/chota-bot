@@ -2,6 +2,7 @@
 
 let TelegramBot = require('node-telegram-bot-api');
 let movieFetcher = require("./movie-fetcher");
+let nerdpoints = require("./nerdpoints-service");
 let utils = require('./utils');
 
 let bot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
@@ -42,7 +43,26 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 	bot.sendMessage(msg.chat.id, match[1]);
 });
 
-bot.on('message', (msg) => {
+bot.onText(/\/nerdpoint [\w\s]+ [\+\-]?\d+/, function (msg, match) {
+    if(msg.entities.length > 0 && msg.entities.find( (entity ) => { return entity.type == "text_mention" }) != undefined) {
+        let user = msg.entities.find( (entity ) => { return entity.type == "text_mention" }).user;
+        let pointsRaw = /[\+\-]?\d+/.exec(msg.text);
+        if(pointsRaw) {
+            let sign = /[\+\-]?/.exec(pointsRaw[0])[0] | "+";
+            let points = parseInt(/\d+/.exec(pointsRaw[0])[0]) | 0;
+            bot.sendMessage(msg.chat.id, nerdpoints.add(`${user.first_name} ${user.last_name}`, points, sign == "+" || sign == 0));
+        }
+    } else {
+        bot.sendMessage(msg.chat.id, "Nope!");
+    }
+});
+
+bot.onText(/\/nerdpoints/, function (msg, match) {
+    let result = JSON.stringify(nerdpoints.get(true));
+    bot.sendMessage(msg.chat.id, result, { parse_mode : "HTML" });
+});
+
+/*bot.on('message', (msg) => {
 	console.log(/chota/.test(msg.text.toLowerCase()));
 	if(/chota/.test(msg.text.toLowerCase()) && !/\/chota/.test(msg.text.toLowerCase())) {
 		movieFetcher.getTitle(errorHanler, (titleResult) => {
@@ -50,6 +70,6 @@ bot.on('message', (msg) => {
 			bot.sendMessage(msg.chat.id, titleResult);
 		})
 	}
-});
+});*/
 
 console.log("Bot in running...");
