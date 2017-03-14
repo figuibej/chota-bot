@@ -46,7 +46,7 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 bot.onText(/\/nerdpoint (\@)*[\w\s]+ [\+\-]?\d+/, function (msg, match) {
     if(msg.entities.length > 0 && msg.entities.find( (entity ) => { return entity.type == "text_mention" || entity.type == "mention" }) != undefined) {
         let user = msg.entities.find( (entity ) => { return entity.type == "text_mention" || entity.type == "mention" });
-        user = user.user ? `${user.user.first_name} ${user.user.last_name}` : msg.text.substr(user.offset, user.length);
+        user = user.user ? user.user.id : msg.text.substr(user.offset, user.length);
         let pointsRaw = /[\+\-]?\d+/.exec(msg.text);
         if(pointsRaw) {
             let sign = /[\+\-]?/.exec(pointsRaw[0])[0];

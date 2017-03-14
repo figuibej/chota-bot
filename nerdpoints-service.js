@@ -1,13 +1,23 @@
 'use strict';
 
+let firebase = require('firebase');
+
+let app = firebase.initializeApp({
+    apiKey: "AIzaSyBtNChDxncrZCqAfN2kl6YtSEjrgSO8mh8",
+    authDomain: "nerdpoint-ef650.firebaseapp.com",
+    databaseURL: "https://nerdpoint-ef650.firebaseio.com",
+    storageBucket: "nerdpoint-ef650.appspot.com",
+    messagingSenderId: "638962803741"
+});
+
 let fs = require("fs");
 let fileName = "nerdpoints.json";
 
 let add = (user, points, isAddition) => {
     let content = JSON.parse(fs.readFileSync(fileName));
     if(content[user]) {
-        content[user] = isAddition ? content[user] + points : content[user] - points;
-        fs.writeFile(fileName, JSON.stringify(content));
+        content[user].points = isAddition ? parseInt(content[user].points + points) : parseInt(content[user].points - points);
+        fs.writeFile(fileName, JSON.stringify(content, null, 4));
     }
     return pretty(content);
 };

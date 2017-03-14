@@ -10,6 +10,7 @@
   "author": "figui",
   "license": "ISC",
   "dependencies": {
+    "firebase": "^3.7.1",
     "node-fetch": "^1.6.3",
     "node-telegram-bot-api": "^0.24.0",
     "restify": "^4.3.0"
