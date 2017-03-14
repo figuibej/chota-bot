@@ -10,7 +10,7 @@ let add = (user, points, isAddition) => {
     } else {
         content[user] = points * isAddition ? 1 : -1
     }
-    fs.writeFileSync(fileName, JSON.stringify(content));
+    fs.writeFile(fileName, JSON.stringify(content));
     return pretty(content);
 };
 
