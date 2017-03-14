@@ -13,7 +13,7 @@ let app = firebase.initializeApp({
 let ref = app.database().ref("users");
 
 var get = (prettyPrint) => {
-    return ref.once("value").then((data) => { return prettyPrint ? pretty(data.val()) : null });
+    return ref.once("value").then((data) => { return prettyPrint ? pretty(data) : null });
 };
 
 let add = (user, points, isAddition) => {
@@ -27,9 +27,12 @@ let add = (user, points, isAddition) => {
 };
 
 var pretty = (persons) => {
+    let users = [];
+    persons.forEach((child) => { users.push(child.val()) })
+    users.sort((a,b) => { return a["points"] > b["points"] ? -1 : (a["points"] < b["points"] ? 1 : 0) })
     let result = "";
-    for(let person in persons) {
-        result += `${persons[person].name} : <b>${persons[person].points}</b> `;
+    for(let user in users) {
+        result += `${users[user].name} : *${users[user].points}*\n`;
     }
     return result;
 };
@@ -38,6 +41,3 @@ module.exports = {
     add : add,
     get : get
 };
-
-// get(true).then((data) => { console.log(data) })
-// add("@belruibal", 10, false).then((data) => { console.log(data.val()) });

@@ -52,7 +52,7 @@ bot.onText(/\/nerdpoint (\@)*[\w\s]+ [\+\-]?\d+/, function (msg, match) {
             let sign = /[\+\-]?/.exec(pointsRaw[0])[0];
             let points = parseInt(/\d+/.exec(pointsRaw[0])[0]) | 0;
             nerdpoints.add(user, points, sign == "+" || sign == 0).then((data) => {
-                bot.sendMessage(msg.chat.id, data, { parse_mode : "HTML" });
+                bot.sendMessage(msg.chat.id, data, { parse_mode : "Markdown" });
             })
         }
     } else {
@@ -62,7 +62,7 @@ bot.onText(/\/nerdpoint (\@)*[\w\s]+ [\+\-]?\d+/, function (msg, match) {
 
 bot.onText(/\/nerdpoints/, function (msg, match) {
     nerdpoints.get(true).then((data) => {
-        bot.sendMessage(msg.chat.id, data, { parse_mode : "HTML" });
+        bot.sendMessage(msg.chat.id, data, { parse_mode : "Markdown" });
     });
 });
 
