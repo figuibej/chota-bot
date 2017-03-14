@@ -15,7 +15,7 @@ let add = (user, points, isAddition) => {
 var pretty = (persons) => {
     let result = "";
     for(let person in persons) {
-        result += `${persons[person].name} : <b>${persons[person].point}</b> `;
+        result += `${persons[person].name} : <b>${persons[person].points}</b> `;
     }
     return result;
 };
