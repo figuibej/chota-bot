@@ -1,1 +1,12 @@
-{"Axel Arrondo":60,"Fernando Igui":2,"Lucia Parral":20,"Martin González":-3,"Fernando Yanucio":10,"Juan Manuel Mougan":30,"Santiago":21,"Martin Carreiro":0,"Belen Ruibal":0,"Mila Josch":0}
+{
+  "238319421" : { "name" : "Axel Arrondo", "points" : 60 },
+  "177325013" : { "name" : "Fernando Igui", "points" : 2 },
+  "87028621" :  { "name" : "Lucia Parral" , "points" : 20 },
+  "164523322" : { "name" : "Martin González" , "points" : -3 },
+  "221495686" : { "name" : "Fernando Yanucio" , "points" : 10 },
+  "293024069" : { "name" : "Juan Manuel Mougan" , "points" : 30 },
+  "15195962" :  { "name" : "Santiago" , "points" : 21 },
+  "260604459" : { "name" : "Martin Carreiro", "points" : 0 },
+  "@belruibal" : { "name" : "Belen Ruibal", "points" : 0 },
+  "173053449" : { "name" : "Mila Josch", "points" : 0 }
+}

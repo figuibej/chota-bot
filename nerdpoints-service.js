@@ -7,17 +7,15 @@ let add = (user, points, isAddition) => {
     let content = JSON.parse(fs.readFileSync(fileName));
     if(content[user]) {
         content[user] = isAddition ? content[user] + points : content[user] - points;
-    } else {
-        content[user] = points * isAddition ? 1 : -1
+        fs.writeFile(fileName, JSON.stringify(content));
     }
-    fs.writeFile(fileName, JSON.stringify(content));
     return pretty(content);
 };
 
 var pretty = (persons) => {
     let result = "";
     for(let person in persons) {
-        result += `${person} : <b>${persons[person]}</b> `;
+        result += `${person} : <b>${persons[person].name}</b> `;
     }
     return result;
 };

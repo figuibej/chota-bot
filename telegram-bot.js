@@ -43,14 +43,15 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 	bot.sendMessage(msg.chat.id, match[1]);
 });
 
-bot.onText(/\/nerdpoint [\w\s]+ [\+\-]?\d+/, function (msg, match) {
-    if(msg.entities.length > 0 && msg.entities.find( (entity ) => { return entity.type == "text_mention" }) != undefined) {
-        let user = msg.entities.find( (entity ) => { return entity.type == "text_mention" }).user;
+bot.onText(/\/nerdpoint (\@)*[\w\s]+ [\+\-]?\d+/, function (msg, match) {
+    if(msg.entities.length > 0 && msg.entities.find( (entity ) => { return entity.type == "text_mention" || entity.type == "mention" }) != undefined) {
+        let user = msg.entities.find( (entity ) => { return entity.type == "text_mention" || entity.type == "mention" });
+        user = user.user ? `${user.user.first_name} ${user.user.last_name}` : msg.text.substr(user.offset, user.length);
         let pointsRaw = /[\+\-]?\d+/.exec(msg.text);
         if(pointsRaw) {
-            let sign = /[\+\-]?/.exec(pointsRaw[0])[0] | "+";
+            let sign = /[\+\-]?/.exec(pointsRaw[0])[0];
             let points = parseInt(/\d+/.exec(pointsRaw[0])[0]) | 0;
-            bot.sendMessage(msg.chat.id, nerdpoints.add(`${user.first_name} ${user.last_name}`, points, sign == "+" || sign == 0));
+            bot.sendMessage(msg.chat.id, nerdpoints.add(user, points, sign == "+" || sign == 0));
         }
     } else {
         bot.sendMessage(msg.chat.id, "Nope!");
