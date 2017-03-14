@@ -10,16 +10,16 @@ let app = firebase.initializeApp({
     messagingSenderId: "638962803741"
 });
 
-let fs = require("fs");
-let fileName = "nerdpoints.json";
+let ref = app.database().ref("users");
 
 let add = (user, points, isAddition) => {
-    let content = JSON.parse(fs.readFileSync(fileName));
-    if(content[user]) {
-        content[user].points = isAddition ? parseInt(content[user].points + points) : parseInt(content[user].points - points);
-        fs.writeFile(fileName, JSON.stringify(content, null, 4));
-    }
-    return pretty(content);
+    return ref.child(user).once("value")
+        .then((data) => {
+            let userData = data.val();
+            userData.points = isAddition ? parseInt(userData.points + points) : parseInt(userData.points - points);
+            ref.child(user).update(userData);
+            return ref.once("value")
+        })
 };
 
 var pretty = (persons) => {
@@ -29,15 +29,15 @@ var pretty = (persons) => {
     }
     return result;
 };
-
+//
 let get = (prettyPrint) => {
-    let result = JSON.parse(fs.readFileSync(fileName));
-    return prettyPrint ? pretty(result) : result;
+    return ref.once("value").then((data) => { return prettyPrint ? pretty(data.val()) : null });
 };
-
-
 
 module.exports = {
     add : add,
     get : get
 };
+
+// get(true).then((data) => { console.log(data) })
+// add("@belruibal", 10, false).then((data) => { console.log(data.val()) });

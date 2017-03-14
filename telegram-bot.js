@@ -51,7 +51,9 @@ bot.onText(/\/nerdpoint (\@)*[\w\s]+ [\+\-]?\d+/, function (msg, match) {
         if(pointsRaw) {
             let sign = /[\+\-]?/.exec(pointsRaw[0])[0];
             let points = parseInt(/\d+/.exec(pointsRaw[0])[0]) | 0;
-            bot.sendMessage(msg.chat.id, nerdpoints.add(user, points, sign == "+" || sign == 0));
+            nerdpoints.add(user, points, sign == "+" || sign == 0).then((data) => {
+                bot.sendMessage(msg.chat.id, data.val(), { parse_mode : "HTML" });
+            })
         }
     } else {
         bot.sendMessage(msg.chat.id, "Nope!");
@@ -59,8 +61,9 @@ bot.onText(/\/nerdpoint (\@)*[\w\s]+ [\+\-]?\d+/, function (msg, match) {
 });
 
 bot.onText(/\/nerdpoints/, function (msg, match) {
-    let result = JSON.stringify(nerdpoints.get(true));
-    bot.sendMessage(msg.chat.id, result, { parse_mode : "HTML" });
+    nerdpoints.get(true).then((data) => {
+        bot.sendMessage(msg.chat.id, data, { parse_mode : "HTML" });
+    });
 });
 
 /*bot.on('message', (msg) => {
