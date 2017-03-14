@@ -12,13 +12,17 @@ let app = firebase.initializeApp({
 
 let ref = app.database().ref("users");
 
+var get = (prettyPrint) => {
+    return ref.once("value").then((data) => { return prettyPrint ? pretty(data.val()) : null });
+};
+
 let add = (user, points, isAddition) => {
     return ref.child(user).once("value")
         .then((data) => {
             let userData = data.val();
             userData.points = isAddition ? parseInt(userData.points + points) : parseInt(userData.points - points);
             ref.child(user).update(userData);
-            return ref.once("value")
+            return get(true)
         })
 };
 
@@ -28,10 +32,6 @@ var pretty = (persons) => {
         result += `${persons[person].name} : <b>${persons[person].points}</b> `;
     }
     return result;
-};
-//
-let get = (prettyPrint) => {
-    return ref.once("value").then((data) => { return prettyPrint ? pretty(data.val()) : null });
 };
 
 module.exports = {
