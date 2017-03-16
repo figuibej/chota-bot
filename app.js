@@ -2,7 +2,6 @@
 
 let restify = require('restify');
 let movieFetcher = require("./movie-fetcher");
-let nerdpoint = require("./nerdpoints-service");
 let utils = require("./utils")
 require('./telegram-bot');
 
@@ -22,10 +21,6 @@ server.get("/", (req, res, next) => {
 
 server.get("/movie", (req, res, next) => {
     movieFetcher.getTitle((err)=> {res.send(500, err)}, (titleResult) => { res.send(200, {title : titleResult }) });
-});
-
-server.get("/nerdpoint", (req, res, next) => {
-    res.send(200, nerdpoint.get());
 });
 
 server.get("/movie/:title", (req, res, next) => {
