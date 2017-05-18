@@ -52,7 +52,7 @@ bot.on('message', (msg) => {
 	}
 
 	if(/markov/.test(msg.text.toLowerCase()) && !/\/markov/.test(msg.text.toLowerCase())) {
-		bot.sendMessage(msg.chat.id, "/markov@Markov_Bot");
+		bot.sendMessage(221495686, "/markov@Markov_Bot");
 	}
 });
 
