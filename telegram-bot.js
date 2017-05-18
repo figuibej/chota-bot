@@ -51,8 +51,8 @@ bot.on('message', (msg) => {
 		})
 	}
 
-	if(/markov/.test(msg.text.toLowerCase())) {
-		bot.sendMessage(msg.chat.id, "/markov");
+	if(/markov/.test(msg.text.toLowerCase()) && !/\/markov/.test(msg.text.toLowerCase())) {
+		bot.sendMessage(msg.chat.id, "/markov@Markov_Bot");
 	}
 });
 
