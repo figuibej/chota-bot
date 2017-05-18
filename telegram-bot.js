@@ -42,7 +42,7 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 	bot.sendMessage(msg.chat.id, match[1]);
 });
 
-/*bot.on('message', (msg) => {
+bot.on('message', (msg) => {
 	console.log(/chota/.test(msg.text.toLowerCase()));
 	if(/chota/.test(msg.text.toLowerCase()) && !/\/chota/.test(msg.text.toLowerCase())) {
 		movieFetcher.getTitle(errorHanler, (titleResult) => {
@@ -50,6 +50,10 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 			bot.sendMessage(msg.chat.id, titleResult);
 		})
 	}
-});*/
+
+	if(/markov/.test(msg.text.toLowerCase())) {
+		bot.sendMessage(msg.chat.id, "/markov");
+	}
+});
 
 console.log("Bot in running...");
