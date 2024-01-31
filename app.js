@@ -1,12 +1,12 @@
 'use strict';
 
-let restify = require('restify');
-let movieFetcher = require("./movie-fetcher");
-let utils = require("./utils")
+const restify = require('restify');
+const movieFetcher = require("./movie-fetcher");
+const utils = require("./utils")
 require('./telegram-bot');
 
 
-let server = restify.createServer({
+const server = restify.createServer({
     name: 'chota-bot',
     version: '1.0.0'
 });

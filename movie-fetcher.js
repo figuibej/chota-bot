@@ -1,11 +1,11 @@
 let fetch = require('node-fetch');
 let utils = require('./utils');
     
-var baseUrl = `https://api.themoviedb.org/3/search/movie?api_key=a7dc625117e31b1b8294e494696b4de7&language=es-ES&include_adult=true`;
-var queryOptions = ["la", "le", "de", "que", "un", "del", "con"];
+const baseUrl = `https://api.themoviedb.org/3/search/movie?api_key=a7dc625117e31b1b8294e494696b4de7&language=es-ES&include_adult=true`;
+const queryOptions = ["la", "le", "de", "que", "un", "del", "con"];
 
 
-var getTitle = (err, success) => {
+const getTitle = (err, success) => {
     let url = baseUrl + `&page=${utils.random(1, 10)}`;
     let query = queryOptions[utils.random(0, queryOptions.length - 1)];
     url += `&query=${query}`;
