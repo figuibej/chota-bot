@@ -3,19 +3,19 @@
 const TelegramBot = require('node-telegram-bot-api');
 const movieFetcher = require("./movie-fetcher");
 const utils = require('./utils');
-
 const bot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
-const errorHanler = (err) => { bot.sendMessage(msg.chat.id, "Me siento mal, te contesto cuando me recupere");}
+let errorHandler = (err) => { bot.sendMessage("Me siento mal, te contesto cuando me recupere");}
+
 
 bot.onText(/^\/movie$/, function (msg) {
-	movieFetcher.getTitle(errorHanler, (titleResult) => {
+	movieFetcher.getTitle(errorHandler, (titleResult) => {
 		console.log(`Responding /movie to ${msg.chat.id} with : ${titleResult}`);
 		bot.sendMessage(msg.chat.id, titleResult);
 	});
 });
 
 bot.onText(/^\/chota$/, function (msg) {
-	movieFetcher.getTitle(errorHanler, (titleResult) => {
+	movieFetcher.getTitle(errorHandler, (titleResult) => {
 		console.log(`Responding /chota to ${msg.chat.id} with : ${titleResult}`);
 		bot.sendMessage(msg.chat.id, titleResult);
 	})
@@ -45,7 +45,7 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 bot.on('message', (msg) => {
 	console.log(/chota/.test(msg.text.toLowerCase()));
 	if(/chota/.test(msg.text.toLowerCase()) && !/\/chota/.test(msg.text.toLowerCase())) {
-		movieFetcher.getTitle(errorHanler, (titleResult) => {
+		movieFetcher.getTitle(errorHandler, (titleResult) => {
 			console.log(`Responding on 'message' to ${msg.chat.id} with : ${titleResult}`);
 			bot.sendMessage(msg.chat.id, titleResult);
 		})
