@@ -4,7 +4,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const movieFetcher = require("./movie-fetcher");
 const utils = require('./utils');
 const bot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
-let errorHandler = (err) => { bot.sendMessage("Me siento mal, te contesto cuando me recupere");}
+let errorHandler = (err) => { console.log(err) }
 
 
 bot.onText(/^\/movie$/, function (msg) {
