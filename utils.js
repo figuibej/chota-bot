@@ -15,7 +15,7 @@ const getChotaFromArticle = (word) => {
 
 const isArticle = (word) => {
     let article = getChotaFromArticle(word)
-    return (ARTICLES) ? true : false;
+    return (article) ? true : false;
 };
 
 const findChotoGender = (titleWords, wordIndex) => {
