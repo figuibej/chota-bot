@@ -7,37 +7,37 @@ const bot = new TelegramBot(process.env.TELEGRAM_KEY, { polling: true });
 let errorHandler = (err) => { console.error(err) }
 
 
-bot.onText(/^\/movie$/, function (msg) {
+bot.onText(/^\/movie$/, (msg) => {
 	movieFetcher.getTitle(errorHandler, (titleResult) => {
 		console.log(`Responding /movie to ${msg.chat.id} with : ${titleResult}`);
 		bot.sendMessage(msg.chat.id, titleResult);
 	});
 });
 
-bot.onText(/^\/chota$/, function (msg) {
+bot.onText(/^\/chota$/, (msg) => {
 	movieFetcher.getTitle(errorHandler, (titleResult) => {
 		console.log(`Responding /chota to ${msg.chat.id} with : ${titleResult}`);
 		bot.sendMessage(msg.chat.id, titleResult);
 	})
 });
 
-bot.onText(/^\/chota (.*)/, function (msg, match) {
+bot.onText(/^\/chota (.*)/, (msg, match) => {
 	let titleResult = utils.changeRandom(match[1])
 	console.log(`Responding /chota ${match[1]} to ${msg.chat.id} with : ${titleResult}`);
 	bot.sendMessage(msg.chat.id, titleResult);
 });
 
-bot.onText(/\/ask (.+)/, function (msg) {
+bot.onText(/\/ask (.+)/, (msg) => {
 	console.log(`Responding 'A tu hermana!!! 'to ${msg.chat.id}`);
 	bot.sendMessage(msg.chat.id, "A tu hermana!!!");
 });
 
-bot.onText(/\/quien (.+)/, function (msg) {
+bot.onText(/\/quien (.+)/, (msg) => {
 	console.log(`Responding 'A tu hermana!!! 'to ${msg.chat.id}`);
 	bot.sendMessage(msg.chat.id, "A tu hermana!!!");
 });
 
-bot.onText(/\/echo (.+)/, function (msg, match) {
+bot.onText(/\/echo (.+)/, (msg, match) => {
 	console.log(`Echo ${match[1]} to ${msg.chat.id}`);
 	bot.sendMessage(msg.chat.id, match[1]);
 });
