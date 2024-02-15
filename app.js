@@ -28,7 +28,7 @@ server.get("/movie/:title", (req, res, next) => {
     titleResult ? res.send(200, { title : titleResult }) : res.send(500, "Something is wrong, title cannot be chotaized")
 });
 
-server.listen(process.env.PORT || 8080, function() {
+server.listen(process.env.PORT || 8080, () => {
     console.log('%s listening at %s', server.name, server.url);
 });
 

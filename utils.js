@@ -33,7 +33,7 @@ const changeRandom = (title) => {
     let result;
     do {
         let wordIndex = random(0, titleWords.length - 1);
-        if(!isStopWord(titleWords[wordIndex].toLowerCase()) && validWord.test(titleWords[wordIndex])) {
+        if(!isStopWord(titleWords[wordIndex].toLowerCase()) && VALID_WORD_REGEXP.test(titleWords[wordIndex])) {
             found = true;
             titleWords[wordIndex] = replace(titleWords[wordIndex], findChotoGender(titleWords, wordIndex - 1));
             console.log(`Resonding /chota ${title} with : ${titleWords.join(" ")}`);
@@ -48,7 +48,7 @@ const random = (min, max) => {
 };
 
 const replace = (word, withWord) => {
-    return word.replace(validWord, withWord);
+    return word.replace(VALID_WORD_REGEXP, withWord);
 };
 
 module.exports = {
