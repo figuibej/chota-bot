@@ -2,13 +2,15 @@
 
 const restify = require('restify');
 const movieFetcher = require("./movie-fetcher");
-const utils = require("./utils")
+const utils = require("./utils");
+const { LOGGER } = require('./logger');
 require('./telegram-bot');
 
 
 const server = restify.createServer({
     name: 'chota-bot',
-    version: '1.0.0'
+    version: '1.0.0',
+    log: LOGGER
 });
 
 server.use(restify.acceptParser(server.acceptable));
@@ -29,6 +31,6 @@ server.get("/movie/:title", (req, res, next) => {
 });
 
 server.listen(process.env.PORT || 8080, () => {
-    console.log('%s listening at %s', server.name, server.url);
+    LOGGER.info('%s listening at %s', server.name, server.url);
 });
 
