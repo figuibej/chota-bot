@@ -12,7 +12,7 @@ const queryOptions = [
     "con"
 ];
 
-const getTitle = async (err, success) => {
+const getTitle = async (err, success, retryCount = 5) => {
     let url = baseUrl + `&page=${utils.random(1, 10)}`;
     let query = queryOptions[utils.random(0, queryOptions.length - 1)];
     url += `&query=${query}`;
@@ -47,8 +47,8 @@ const getTitle = async (err, success) => {
         if (!replaceDone || titleWords.length == 1) {
             titleWords[0] = "Chota"
         }
-        if (/^(el|la|lo|los|las|se|le|les|un|de)\s(chota|choto|chotos|chotas)$/.test(titleWords.join(" ").toLowerCase())) {
-            getTitle(err, success)
+        if (/^(el|la|lo|los|las|se|le|les|un|de)\s(chota|choto|chotos|chotas)$/.test(titleWords.join(" ").toLowerCase()) && retryCount > 0) {
+            getTitle(err, success, retryCount - 1)
         } else {
             success(titleWords.join(" ") + ` - (${title})`);
         }
