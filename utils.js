@@ -407,7 +407,7 @@ const ARTICLES = {
 const VALID_WORD_REGEXP = /[A-Za-záéíóúÁÉÍÓÚñÑàèìòùÀÈÌÒÙ]+/; // regexp used for check that the candidate word to be replaced it is not a symbol
 
 const isStopWord = (word) => {
-    return STOPWORDS.indexOf(word) != -1;
+    return STOPWORDS.indexOf(word.toLowerCase()) != -1;
 };
 
 const getChotaFromArticle = (word) => {
