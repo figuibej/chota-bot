@@ -5,7 +5,7 @@ const baseUrl = `https://api.themoviedb.org/3/search/movie?api_key=a7dc625117e31
 
 
 const getTitle = async (err, success) => {
-    const url = `${baseUrl}&page=${utils.random(1, 10)}&query=${utils.STOPWORDS[utils.random(0, queryOptions.length - 1)]}`;
+    const url = `${baseUrl}&page=${utils.random(1, 10)}&query=${utils.STOPWORDS[utils.random(0, utils.STOPWORDS.length - 1)]}`;
 
     try {
         const res = await fetch(url);
