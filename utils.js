@@ -394,6 +394,7 @@ const ARTICLES = {
     "unos": "chotos",
     "unas": "chotas",
     "suya": "chota",
+    "suyas": "chotas",
     "alguna": "chota",
     "algunas": "chotas",
     "algun": "choto",

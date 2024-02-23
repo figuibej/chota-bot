@@ -48,7 +48,7 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 
 bot.on('message', (msg) => {
     LOGGER.info(/chota/.test(msg.text.toLowerCase()));
-    if (/chota/.test(msg.text.toLowerCase()) && !/\/chota/.test(msg.text.toLowerCase())) {
+    if (/chot(a|o)/.test(msg.text.toLowerCase()) && !/\/chota/.test(msg.text.toLowerCase())) {
         movieFetcher.getTitle(errorHandler, (titleResult) => {
             LOGGER.info(`Responding on 'message' to ${msg.chat.id} with : ${titleResult}`);
             bot.sendMessage(msg.chat.id, titleResult);
