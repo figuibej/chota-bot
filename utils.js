@@ -454,5 +454,6 @@ module.exports = {
     random: random,
     replace: replace,
     validWordRegExp: VALID_WORD_REGEXP,
+    STOPWORDS: STOPWORDS,
     changeRandom: changeRandom
 };
