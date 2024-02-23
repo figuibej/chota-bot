@@ -415,18 +415,11 @@ const getChotaFromArticle = (word) => {
     return ARTICLES[key];
 };
 
-const isArticle = (word) => {
-    let article = getChotaFromArticle(word)
-    return (article) ? true : false;
-};
 
 const findChotoGender = (titleWords, wordIndex) => {
     if (wordIndex < 0) { return "chota" }
-    if (isArticle(titleWords[wordIndex])) {
-        return getChotaFromArticle(titleWords[wordIndex])
-    } else {
-        return findChotoGender(titleWords, wordIndex - 1)
-    }
+    const gender = getChotaFromArticle(titleWords[wordIndex])    
+    return gender ? gender : findChotoGender(titleWords, wordIndex - 1)
 };
 
 const changeRandom = (title) => {
@@ -457,7 +450,6 @@ const replace = (word, withWord) => {
 
 module.exports = {
     isStopWord: isStopWord,
-    isArticle: isArticle,
     findChotoGender: findChotoGender,
     random: random,
     replace: replace,

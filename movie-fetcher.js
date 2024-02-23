@@ -13,45 +13,34 @@ const queryOptions = [
 ];
 
 const getTitle = async (err, success) => {
-    let url = baseUrl + `&page=${utils.random(1, 10)}`;
-    let query = queryOptions[utils.random(0, queryOptions.length - 1)];
-    url += `&query=${query}`;
-    
+    const url = `${baseUrl}&page=${utils.random(1, 10)}&query=${queryOptions[utils.random(0, queryOptions.length - 1)]}`;
+
     try {
         const res = await fetch(url);
         const data = await res.json();
-        let title = data
-            .results[utils.random(0, data.results.length - 1)]
-            .title;
-        let titleWords = title.split(" ");
+        const { title } = data.results[utils.random(0, data.results.length - 1)];
+        const titleWords = title.split(" ");
 
-        let replaceDone = false;
-        let i = 0;
-        while (i <= titleWords.length | !replaceDone) {
-            let index = utils.random(0, titleWords.length - 1);
-            let lowerCaseWord = titleWords[index].toLowerCase();
-            if (!utils.isStopWord(lowerCaseWord) && utils.validWordRegExp.test(titleWords[index].toLowerCase())) {
-                replaceDone = true;
-                titleWords[index] = utils.replace(
-                    titleWords[index],
-                    utils.findChotoGender(titleWords, index - 1)
-                );
-                if (index == 0) {
-                    titleWords[index] = titleWords[index]
-                        .charAt(0)
-                        .toUpperCase() + titleWords[index].slice(1);
-                }
-                break;
+        const replacedWordIndex = titleWords.findIndex((word, index) => {
+            const lowerCaseWord = word.toLowerCase();
+            return !utils.isStopWord(lowerCaseWord) && utils.validWordRegExp.test(lowerCaseWord);
+        });
+
+        if (replacedWordIndex !== -1) {
+            titleWords[replacedWordIndex] = utils.replace(
+                titleWords[replacedWordIndex],
+                utils.findChotoGender(titleWords, replacedWordIndex - 1)
+            );
+            if (replacedWordIndex === 0) {
+                titleWords[replacedWordIndex] = titleWords[replacedWordIndex][0].toUpperCase() + titleWords[replacedWordIndex].slice(1);
             }
-            i++;
+        } else if (titleWords.length === 1) {
+            titleWords[0] = "Chota";
         }
-        if (!replaceDone || titleWords.length == 1) {
-            titleWords[0] = "Chota"
-        }
-        success(titleWords.join(" ") + ` - (${title})`);
-        
+
+        success(`${titleWords.join(" ")} - (${title})`);
     } catch (e) {
-        err(e)
+        err(e);
     }
 }
 
