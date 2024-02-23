@@ -12,10 +12,11 @@ const queryOptions = [
     "con"
 ];
 
-const getTitle = async (err, success, retryCount = 5) => {
+const getTitle = async (err, success) => {
     let url = baseUrl + `&page=${utils.random(1, 10)}`;
     let query = queryOptions[utils.random(0, queryOptions.length - 1)];
     url += `&query=${query}`;
+    
     try {
         const res = await fetch(url);
         const data = await res.json();
@@ -28,7 +29,8 @@ const getTitle = async (err, success, retryCount = 5) => {
         let i = 0;
         while (i <= titleWords.length | !replaceDone) {
             let index = utils.random(0, titleWords.length - 1);
-            if (!utils.isStopWord(titleWords[index].toLowerCase()) && utils.validWordRegExp.test(titleWords[index].toLowerCase())) {
+            let lowerCaseWord = titleWords[index].toLowerCase();
+            if (!utils.isStopWord(lowerCaseWord) && utils.validWordRegExp.test(titleWords[index].toLowerCase())) {
                 replaceDone = true;
                 titleWords[index] = utils.replace(
                     titleWords[index],
@@ -37,8 +39,7 @@ const getTitle = async (err, success, retryCount = 5) => {
                 if (index == 0) {
                     titleWords[index] = titleWords[index]
                         .charAt(0)
-                        .toUpperCase() + titleWords[index]
-                        .slice(1);
+                        .toUpperCase() + titleWords[index].slice(1);
                 }
                 break;
             }
@@ -47,11 +48,8 @@ const getTitle = async (err, success, retryCount = 5) => {
         if (!replaceDone || titleWords.length == 1) {
             titleWords[0] = "Chota"
         }
-        if (/^(el|la|lo|los|las|se|le|les|un|de)\s(chota|choto|chotos|chotas)$/.test(titleWords.join(" ").toLowerCase()) && retryCount > 0) {
-            getTitle(err, success, retryCount - 1)
-        } else {
-            success(titleWords.join(" ") + ` - (${title})`);
-        }
+        success(titleWords.join(" ") + ` - (${title})`);
+        
     } catch (e) {
         err(e)
     }
