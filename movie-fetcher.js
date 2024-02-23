@@ -15,7 +15,7 @@ const queryOptions = [
     "con"
 ];
 
-const getTitle = async (err, success) => {
+const getTitle = async (err, success, retries = 5) => {
     const url = `${baseUrl}&page=${utils.random(1, 10)}&query=${queryOptions[utils.random(0, queryOptions.length - 1)]}`;
 
     try {
@@ -41,7 +41,11 @@ const getTitle = async (err, success) => {
             titleWords[0] = "Chota";
         }
 
-        success(`${titleWords.join(" ")} - (${title})`);
+        if(/^(el|la|lo|los|las|se|le|les|un|de)\s(chota|choto|chotos|chotas)$/.test(titleWords.join(" ").toLowerCase()) && retries > 0) {
+            getTitle(err, success, retries - 1)
+        } else {
+            success(titleWords.join(" ") + ` - (${title})`);
+        }
     } catch (e) {
         err(e);
     }
