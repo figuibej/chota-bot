@@ -24,20 +24,21 @@ const getTitle = async (err, success, retries = 5) => {
         const { title } = data.results[utils.random(0, data.results.length - 1)];
         const titleWords = title.split(" ");
 
-        const replacedWordIndex = titleWords.findIndex((word, index) => {
-            const lowerCaseWord = word.toLowerCase();
-            return !utils.isStopWord(lowerCaseWord) && utils.validWordRegExp.test(lowerCaseWord);
-        });
+        const validWords = titleWords.filter(word => !utils.isStopWord(word) && utils.validWordRegExp.test(word));
 
-        if (replacedWordIndex !== -1) {
+        if (validWords.length > 0) {
+            const randomValidWord = validWords[utils.random(0, validWords.length - 1)];
+            const replacedWordIndex = titleWords.indexOf(randomValidWord);
+
             titleWords[replacedWordIndex] = utils.replace(
                 titleWords[replacedWordIndex],
                 utils.findChotoGender(titleWords, replacedWordIndex - 1)
             );
+            
             if (replacedWordIndex === 0) {
                 titleWords[replacedWordIndex] = titleWords[replacedWordIndex][0].toUpperCase() + titleWords[replacedWordIndex].slice(1);
             }
-        } else if (titleWords.length === 1) {
+        } else {
             titleWords[0] = "Chota";
         }
 
