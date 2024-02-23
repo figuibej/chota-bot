@@ -391,6 +391,8 @@ const ARTICLES = {
     "las": "chotas",
     "un": "choto",
     "una": "chota",
+    "unos": "chotos",
+    "unas": "chotas",
     "suya": "chota",
     "alguna": "chota",
     "algunas": "chotas",
@@ -450,6 +452,8 @@ const random = (min, max) => {
 const replace = (word, withWord) => {
     return word.replace(VALID_WORD_REGEXP, withWord);
 };
+
+
 
 module.exports = {
     isStopWord: isStopWord,
