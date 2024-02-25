@@ -7,8 +7,8 @@ services:
     ports:
       - 8000
     environment:
-      - TELEGRAM_KEY=311477110:AAEPYL1lz75Gh52NgJfVbhwYbNnR56rqtIM
-      - SPACY_URL=http://spacy:80
+      - TELEGRAM_KEY=${TELEGRAM_KEY}
+      - SPACY_HOST=${SPACY_HOST}
   spacy:
     image: jgontrum/spacyapi:es_v2
     ports:
