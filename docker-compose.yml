@@ -5,13 +5,14 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8000
+      - 8080
     environment:
       - TELEGRAM_KEY=${TELEGRAM_KEY}
       - SPACY_HOST=${SPACY_HOST}
     depends_on:
       - spacy
   spacy:
-    image: jgontrum/spacyapi:es_v2
+    image:  
     ports:
       - 80
+  

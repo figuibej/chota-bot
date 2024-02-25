@@ -1,11 +1,13 @@
 'use strict';
 
-const { LOGGER } = require("./logger");
-
 const FEMALE = 'female';
 const MALE = 'male';
 const PLURAL = 'plural';
 const SINGULAR = 'singular';
+const CHOTO = 'choto';
+const CHOTOS = 'chotos';
+const CHOTA = 'chota';
+const CHOTAS = 'chotas';
 
 const STOPWORDS = [
     'el',
@@ -391,28 +393,28 @@ const STOPWORDS = [
 ]
 
 const ARTICLES = {
-    "el": { gender: MALE, number: SINGULAR, replace: "choto"},
-    "él": { gender: MALE, number: SINGULAR, replace: "choto"},
-    "la": { gender: FEMALE, number: SINGULAR, replace: "chota"},
-    "los": { gender: MALE, number: PLURAL, replace: "chotos"},
-    "las": { gender: FEMALE, number: PLURAL, replace: "chotas"},
-    "un":  { gender: MALE, number: SINGULAR, replace: "choto"},
-    "una": { gender: FEMALE, number: SINGULAR, replace: "chota"},
-    "tu" : { gender: FEMALE, number: SINGULAR, replace: "chota"},
-    "tus" : { gender: FEMALE, number: PLURAL, replace: "chotas"},
-    "unos": { gender: MALE, number: PLURAL, replace: "chotos"},
-    "unas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
-    "suya": { gender: FEMALE, number: SINGULAR, replace: "chota"},
-    "suyas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
-    "alguna": { gender: FEMALE, number: SINGULAR, replace: "chota"},
-    "algunas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
-    "algun": { gender: MALE, number: SINGULAR, replace: "choto"},
-    "algunos": { gender: MALE, number: PLURAL, replace: "chotos"},
-    "aquella": { gender: FEMALE, number: SINGULAR, replace: "chota"},
-    "aquellas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
-    "aquello": { gender: MALE, number: SINGULAR, replace: "choto"},
-    "aquellos": { gender: MALE, number: PLURAL, replace: "chotos"},
-    "del": { gender: MALE, number: SINGULAR, replace: "choto"},
+    "el": { gender: MALE, number: SINGULAR, replace: CHOTO},
+    "él": { gender: MALE, number: SINGULAR, replace: CHOTO},
+    "la": { gender: FEMALE, number: SINGULAR, replace: CHOTA},
+    "los": { gender: MALE, number: PLURAL, replace: CHOTOS},
+    "las": { gender: FEMALE, number: PLURAL, replace: CHOTAS},
+    "un":  { gender: MALE, number: SINGULAR, replace: CHOTO},
+    "una": { gender: FEMALE, number: SINGULAR, replace: CHOTA},
+    "tu" : { gender: FEMALE, number: SINGULAR, replace: CHOTA},
+    "tus" : { gender: FEMALE, number: PLURAL, replace: CHOTAS},
+    "unos": { gender: MALE, number: PLURAL, replace: CHOTOS},
+    "unas": { gender: FEMALE, number: PLURAL, replace: CHOTAS},
+    "suya": { gender: FEMALE, number: SINGULAR, replace: CHOTA},
+    "suyas": { gender: FEMALE, number: PLURAL, replace: CHOTAS},
+    "alguna": { gender: FEMALE, number: SINGULAR, replace: CHOTA},
+    "algunas": { gender: FEMALE, number: PLURAL, replace: CHOTAS},
+    "algun": { gender: MALE, number: SINGULAR, replace: CHOTO},
+    "algunos": { gender: MALE, number: PLURAL, replace: CHOTOS},
+    "aquella": { gender: FEMALE, number: SINGULAR, replace: CHOTA},
+    "aquellas": { gender: FEMALE, number: PLURAL, replace: CHOTAS},
+    "aquello": { gender: MALE, number: SINGULAR, replace: CHOTO},
+    "aquellos": { gender: MALE, number: PLURAL, replace: CHOTOS},
+    "del": { gender: MALE, number: SINGULAR, replace: CHOTO},
 }
 const VALID_WORD_REGEXP = /[A-Za-záéíóúÁÉÍÓÚñÑàèìòùÀÈÌÒÙ]+/; // regexp used for check that the candidate word to be replaced it is not a symbol
 
@@ -463,4 +465,5 @@ module.exports = {
     MALE: MALE,
     PLURAL: PLURAL,
     SINGULAR: SINGULAR,
+    CHOTA: CHOTA
 };

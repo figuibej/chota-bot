@@ -56,6 +56,13 @@ const getTitle = async (err, success, retries = 5) => {
     }
 }
 
+// call getTitle with a callback function
+getTitle((err) => {
+    console.error(err);
+}, (title) => {
+    console.log(title);
+});
+
 module.exports = {
     getTitle: getTitle
 };

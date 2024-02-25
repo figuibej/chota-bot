@@ -1,11 +1,8 @@
 const fetch = require('node-fetch');
-const { isArticle, isStopWord, validWordRegExp, MALE, FEMALE, PLURAL, SINGULAR, random, findChotoGender } = require('./utils');
+const { isArticle, isStopWord, validWordRegExp, MALE, FEMALE, PLURAL, SINGULAR, random, findChotoGender, CHOTA } = require('./utils');
 const SPACY_HOST = process.env.SPACY_HOST || 'http://localhost:3000';
 
-async function getNouns(text) {
-    const textLower = text.toLowerCase();
-    const textLowerSplit = textLower.split(' ');
-    const textSplit = text.split(' ')
+async function getSpacyNouns(text) {
     try {
         const response = await fetch(`${SPACY_HOST}/dep`, {
             method: 'POST',
@@ -41,37 +38,41 @@ async function getNouns(text) {
                         result.push(item);
                     })
             });
-        
-        // if spacy does not found any nouns, use a fallback implementation
-        if (result.length === 0) {
-            const words = textSplit.filter((w) => !isStopWord(w) && validWordRegExp.test(w))
-
-            if (words.length > 0) {
-                const wordIndex = random(0, words.length - 1);
-                const item = findChotoGender(words, wordIndex - 1);
-
-                result.push({
-                    word: words[wordIndex],
-                    gender: item.gender,
-                    number: item.number,
-                    replacement: item.replace
-                });
-
-            } else {
-                result.push({
-                    word: textSplit[0],
-                    gender: FEMALE,
-                    number: SINGULAR,
-                    replacement: 'Chota'
-                });
-            }
-        }
-        return result;
-
     } catch (error) {
         console.error('Error fetching Spacy service:', error);
         throw error;
     }
+}
+
+async function getNouns(text) {
+    const textLower = text.toLowerCase();
+    const textLowerSplit = textLower.split(' ');
+    const textSplit = text.split(' ')
+    
+    let result = []
+    const words = textSplit.filter((w) => !isStopWord(w) && validWordRegExp.test(w))
+
+    if (words.length > 0) {
+        const wordIndex = random(0, words.length - 1);
+        const item = findChotoGender(words, wordIndex - 1);
+
+        result.push({
+            word: words[wordIndex],
+            gender: item.gender,
+            number: item.number,
+            replacement: item.replace
+        });
+
+    } else {
+        result.push({
+            word: textSplit[0],
+            gender: FEMALE,
+            number: SINGULAR,
+            replacement: CHOTA.charAt(0).toUpperCase() + CHOTA.slice(1)
+        });
+    }
+
+    return result;
 }
 
 module.exports = getNouns;
