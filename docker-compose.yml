@@ -9,6 +9,8 @@ services:
     environment:
       - TELEGRAM_KEY=${TELEGRAM_KEY}
       - SPACY_HOST=${SPACY_HOST}
+    depends_on:
+      - spacy
   spacy:
     image: jgontrum/spacyapi:es_v2
     ports:

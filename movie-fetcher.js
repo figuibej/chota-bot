@@ -1,6 +1,7 @@
 let fetch = require('node-fetch');
 let utils = require('./utils');
 const getNouns = require('./nlp-service');
+const { LOGGER } = require('./logger');
 
 const baseUrl = `https://api.themoviedb.org/3/search/movie?api_key=a7dc625117e31b1b8294e494696b4de7&language=es-ES&include_adult=true`;
 const queryOptions = [
@@ -31,7 +32,7 @@ const getTitle = async (err, success, retries = 5) => {
         if (nouns.length > 0) {
             const randomValidWord = nouns[utils.random(0, nouns.length - 1)].word;
             const replacedWordIndex = titleWords.indexOf(randomValidWord);
-            console.log(nouns, randomValidWord, replacedWordIndex, title);
+            LOGGER.debug(nouns, randomValidWord, replacedWordIndex, title)
 
             if (replacedWordIndex === 0) {
                 titleWords[replacedWordIndex] = titleWords[replacedWordIndex][0].toUpperCase() + titleWords[replacedWordIndex].slice(1);
@@ -54,12 +55,6 @@ const getTitle = async (err, success, retries = 5) => {
         err(e);
     }
 }
-
-// call getTitle and print result
-getTitle(
-    (err) => console.error(err),
-    (success) => console.log(success)
-);
 
 module.exports = {
     getTitle: getTitle

@@ -74,6 +74,4 @@ async function getNouns(text) {
     }
 }
 
-// getNouns("la aldea de la re concha de tu hermana. Pueden acogtarse los nardos").then((res) => console.log(res));\
-
 module.exports = getNouns;
