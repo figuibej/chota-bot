@@ -23,14 +23,6 @@ bot.onText(/^\/chota$/, (msg) => {
     })
 });
 
-bot.onText(/^\/chota (.*)/, (msg, match) => {
-    let titleResult = utils.changeRandom(match[1])
-    LOGGER.info(
-        `Responding /chota ${match[1]} to ${msg.chat.id} with : ${titleResult}`
-    );
-    bot.sendMessage(msg.chat.id, titleResult);
-});
-
 bot.onText(/\/ask (.+)/, (msg) => {
     LOGGER.info(`Responding 'A tu hermana!!! 'to ${msg.chat.id}`);
     bot.sendMessage(msg.chat.id, "A tu hermana!!!");

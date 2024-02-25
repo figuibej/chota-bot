@@ -14,6 +14,7 @@
     "node-telegram-bot-api": "^0.64.0",
     "pino": "^8.18.0",
     "pino-pretty": "^10.3.1",
-    "restify": "^4.3.4"
+    "restify": "^4.3.4",
+    "wordpos": "^2.1.0"
   }
 }

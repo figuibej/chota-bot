@@ -2,6 +2,11 @@
 
 const { LOGGER } = require("./logger");
 
+const FEMALE = 'female';
+const MALE = 'male';
+const PLURAL = 'plural';
+const SINGULAR = 'singular';
+
 const STOPWORDS = [
     'el',
     'la',
@@ -384,26 +389,30 @@ const STOPWORDS = [
     'sido',
     'son'
 ]
+
 const ARTICLES = {
-    "el": "choto",
-    "la": "chota",
-    "los": "chotos",
-    "las": "chotas",
-    "un": "choto",
-    "una": "chota",
-    "unos": "chotos",
-    "unas": "chotas",
-    "suya": "chota",
-    "suyas": "chotas",
-    "alguna": "chota",
-    "algunas": "chotas",
-    "algun": "choto",
-    "algunos": "chotos",
-    "aquella": "chota",
-    "aquellas": "chotas",
-    "aquello": "choto",
-    "aquellos": "chotos",
-    "del": "choto"
+    "el": { gender: MALE, number: SINGULAR, replace: "choto"},
+    "él": { gender: MALE, number: SINGULAR, replace: "choto"},
+    "la": { gender: FEMALE, number: SINGULAR, replace: "chota"},
+    "los": { gender: MALE, number: PLURAL, replace: "chotos"},
+    "las": { gender: FEMALE, number: PLURAL, replace: "chotas"},
+    "un":  { gender: MALE, number: SINGULAR, replace: "choto"},
+    "una": { gender: FEMALE, number: SINGULAR, replace: "chota"},
+    "tu" : { gender: FEMALE, number: SINGULAR, replace: "chota"},
+    "tus" : { gender: FEMALE, number: PLURAL, replace: "chotas"},
+    "unos": { gender: MALE, number: PLURAL, replace: "chotos"},
+    "unas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
+    "suya": { gender: FEMALE, number: SINGULAR, replace: "chota"},
+    "suyas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
+    "alguna": { gender: FEMALE, number: SINGULAR, replace: "chota"},
+    "algunas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
+    "algun": { gender: MALE, number: SINGULAR, replace: "choto"},
+    "algunos": { gender: MALE, number: PLURAL, replace: "chotos"},
+    "aquella": { gender: FEMALE, number: SINGULAR, replace: "chota"},
+    "aquellas": { gender: FEMALE, number: PLURAL, replace: "chotas"},
+    "aquello": { gender: MALE, number: SINGULAR, replace: "choto"},
+    "aquellos": { gender: MALE, number: PLURAL, replace: "chotos"},
+    "del": { gender: MALE, number: SINGULAR, replace: "choto"},
 }
 const VALID_WORD_REGEXP = /[A-Za-záéíóúÁÉÍÓÚñÑàèìòùÀÈÌÒÙ]+/; // regexp used for check that the candidate word to be replaced it is not a symbol
 
@@ -413,30 +422,22 @@ const isStopWord = (word) => {
 
 const getChotaFromArticle = (word) => {
     let key = Object.keys(ARTICLES).find((k) => { return k == word.toLowerCase() })
-    return ARTICLES[key];
+    return ARTICLES[key]?.replace;
 };
 
+const getChotaObject = (word) => {
+    let key = Object.keys(ARTICLES).find((k) => { return k == word.toLowerCase() })
+    return ARTICLES[key];
+}
+
+const isArticle = (word) => {
+    return Object.keys(ARTICLES).indexOf(word.toLowerCase()) != -1;
+};
 
 const findChotoGender = (titleWords, wordIndex) => {
-    if (wordIndex < 0) { return "chota" }
+    if (wordIndex < 0) { return ARTICLES['la'] }
     const gender = getChotaFromArticle(titleWords[wordIndex])    
     return gender ? gender : findChotoGender(titleWords, wordIndex - 1)
-};
-
-const changeRandom = (title) => {
-    let found = false;
-    let titleWords = title.split(" ");
-    let result;
-    do {
-        let wordIndex = random(0, titleWords.length - 1);
-        if (!isStopWord(titleWords[wordIndex].toLowerCase()) && VALID_WORD_REGEXP.test(titleWords[wordIndex])) {
-            found = true;
-            titleWords[wordIndex] = replace(titleWords[wordIndex], findChotoGender(titleWords, wordIndex - 1));
-            LOGGER.info(`Resonding /chota ${title} with : ${titleWords.join(" ")}`);
-            result = titleWords.join(" ");
-        }
-    } while (!found);
-    return result;
 };
 
 const random = (min, max) => {
@@ -451,10 +452,15 @@ const replace = (word, withWord) => {
 
 module.exports = {
     isStopWord: isStopWord,
+    isArticle : isArticle,
+    getChota: getChotaObject,
     findChotoGender: findChotoGender,
     random: random,
     replace: replace,
     validWordRegExp: VALID_WORD_REGEXP,
     STOPWORDS: STOPWORDS,
-    changeRandom: changeRandom
+    FEMALE: FEMALE,
+    MALE: MALE,
+    PLURAL: PLURAL,
+    SINGULAR: SINGULAR,
 };
