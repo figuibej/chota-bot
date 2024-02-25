@@ -1,0 +1,15 @@
+version: '3'
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000
+    environment:
+      - TELEGRAM_KEY=311477110:AAEPYL1lz75Gh52NgJfVbhwYbNnR56rqtIM
+      - SPACY_URL=http://spacy:80
+  spacy:
+    image: jgontrum/spacyapi:es_v2
+    ports:
+      - 80
