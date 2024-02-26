@@ -30,16 +30,19 @@ const getTitle = async (err, success, retries = 5) => {
         // const validWords = titleWords.filter(word => !utils.isStopWord(word) && utils.validWordRegExp.test(word));
 
         if (nouns.length > 0) {
-            const randomValidWord = nouns[utils.random(0, nouns.length - 1)].word;
+            const nounIndex = utils.random(0, nouns.length - 1);
+            const randomValidWord = nouns[nounIndex].word;
             const replacedWordIndex = titleWords.indexOf(randomValidWord);
-            LOGGER.debug(nouns, randomValidWord, replacedWordIndex, title)
+            const replacement = nouns[nounIndex].replacement;
+            
+            console.log(nouns, randomValidWord, replacedWordIndex, title)
 
             if (replacedWordIndex === 0) {
-                titleWords[replacedWordIndex] = titleWords[replacedWordIndex][0].toUpperCase() + titleWords[replacedWordIndex].slice(1);
+                titleWords[replacedWordIndex] = replacement[0].toUpperCase() + replacement.slice(1);
             } else {
                 titleWords[replacedWordIndex] = utils.replace(
                     titleWords[replacedWordIndex],
-                    nouns[utils.random(0, nouns.length - 1)].replacement
+                    replacement
                 );
             }
         } else {
