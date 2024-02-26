@@ -424,7 +424,7 @@ const isStopWord = (word) => {
 
 const getChotaFromArticle = (word) => {
     let key = Object.keys(ARTICLES).find((k) => { return k == word.toLowerCase() })
-    return ARTICLES[key]?.replace;
+    return ARTICLES[key];
 };
 
 const getChotaObject = (word) => {
@@ -438,7 +438,7 @@ const isArticle = (word) => {
 
 const findChotoGender = (titleWords, wordIndex) => {
     if (wordIndex < 0) { return ARTICLES['la'] }
-    const gender = getChotaFromArticle(titleWords[wordIndex])    
+    const gender = getChotaFromArticle(titleWords[wordIndex])
     return gender ? gender : findChotoGender(titleWords, wordIndex - 1)
 };
 

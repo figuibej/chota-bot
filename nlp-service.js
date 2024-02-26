@@ -50,22 +50,23 @@ async function getNouns(text) {
     const textSplit = text.split(' ')
     
     let result = []
-    const words = textSplit.filter((w) => !isStopWord(w) && validWordRegExp.test(w))
+    const words = textLowerSplit.filter((w) => !isStopWord(w) && validWordRegExp.test(w))
 
     if (words.length > 0) {
-        const wordIndex = random(0, words.length - 1);
-        const item = findChotoGender(words, wordIndex - 1);
+        const selectedWord = words[random(0, words.length - 1)];
+        const selectedWordIndex = textLowerSplit.indexOf(selectedWord)
+        const chotaItem = findChotoGender(textLowerSplit, selectedWordIndex - 1);
 
         result.push({
-            word: words[wordIndex],
-            gender: item.gender,
-            number: item.number,
-            replacement: item.replace
+            word: textSplit[selectedWordIndex],
+            gender: chotaItem.gender,
+            number: chotaItem.number,
+            replacement: chotaItem.replace
         });
 
     } else {
         result.push({
-            word: textSplit[0],
+            word: textSplit[0], // return the original word
             gender: FEMALE,
             number: SINGULAR,
             replacement: CHOTA.charAt(0).toUpperCase() + CHOTA.slice(1)
